@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jonathon Owens</Authors>
+    <Description>A simple end user library for hosting a client server architecture over TCP protocol.</Description>
+    <Copyright>2021</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

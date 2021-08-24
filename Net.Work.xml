@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Net.Work</name>
+    </assembly>
+    <members>
+        <member name="T:Net.Work.ByteBuffer">
+            <summary>
+            Contains a list of <see cref="T:System.Byte"/> for sending accross the network. Employs helper methods for writing and reading specific data types from the <see cref="T:Net.Work.ByteBuffer"/>.
+            </summary>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.GetByteCount">
+            <summary>
+            Gets the number of <see cref="T:System.Byte"/> in the buffer.
+            </summary>
+            <returns>An <see cref="T:System.Int32"/> representing how many <see cref="T:System.Byte"/> are currently in the buffer.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.ReadByte">
+            <summary>
+            Reads a single <see cref="T:System.Byte"/> from the buffer and advances the read position forward.
+            </summary>
+            <returns>A single <see cref="T:System.Byte"/> from the buffer. At the current read position.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.GetBytes">
+            <summary>
+            Gets an <see cref="T:System.Array"/> of <see cref="T:System.Byte"/> from the buffer.
+            </summary>
+            <returns>An <see cref="T:System.Array"/> of all <see cref="T:System.Byte"/> in the buffer.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.WriteByte(System.Byte)">
+            <summary>
+            Adds a single <see cref="T:System.Byte"/> to the buffer.
+            </summary>
+            <param name="b">The <see cref="T:System.Byte"/> to write.</param>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.WriteInt(System.Int32)">
+            <summary>
+            Writes a single <see cref="T:System.Int32"/> as 4 <see cref="T:System.Byte"/> to the buffer.
+            </summary>
+            <param name="i">The <see cref="T:System.Int32"/> to write.</param>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.ReadInt">
+            <summary>
+            Reads an <see cref="T:System.Int32"/> from the buffer.
+            </summary>
+            <returns>The next <see cref="T:System.Int32"/> in the buffer.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.WriteString(System.String)">
+            <summary>
+            Writes a single <see cref="T:System.String"/> as a number of <see cref="T:System.Byte"/> to the buffer.
+            Cannot be longer than 32767 characters.
+            </summary>
+            <param name="s">The <see cref="T:System.String"/> to write.</param>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.ReadString">
+            <summary>
+            Reads a <see cref="T:System.String"/> from the buffer.
+            </summary>
+            <returns>The next <see cref="T:System.String"/> in the buffer.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.WriteFloat(System.Single)">
+            <summary>
+            Writes a single <see cref="T:System.Single"/> as 4 <see cref="T:System.Byte"/> to the buffer.
+            </summary>
+            <param name="f">The <see cref="T:System.Single"/> to write.</param>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.ReadFloat">
+            <summary>
+            Reads a <see cref="T:System.Single"/> from the buffer.
+            </summary>
+            <returns>The next <see cref="T:System.Single"/> in the buffer.</returns>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.WriteDouble(System.Double)">
+            <summary>
+            Writes a single <see cref="T:System.Double"/> as 8 <see cref="T:System.Byte"/> to the buffer.
+            </summary>
+            <param name="d">The <see cref="T:System.Double"/> to write.</param>
+        </member>
+        <member name="M:Net.Work.ByteBuffer.ReadDouble">
+            <summary>
+            Reads a <see cref="T:System.Double"/> from the buffer.
+            </summary>
+            <returns>The next <see cref="T:System.Double"/> in the buffer.</returns>
+        </member>
+        <member name="T:Net.Work.Client">
+            <summary>
+            A class managing lower level connections to a server. Automatically starts and manages receiving threads. Used for sending packets to the connected server.
+            See <see cref="M:Net.Work.Client.SendPacket(Net.Work.Packet)"/>.
+            To create a new instance see <see cref="M:Net.Work.NetworkManager.ConnectToServer(System.Net.IPAddress,System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="M:Net.Work.Client.SendPacket(Net.Work.Packet)">
+            <summary>
+            Sends a <see cref="T:Net.Work.Packet"/> to the connected <see cref="T:Net.Work.Server"/>.
+            </summary>
+            <param name="packet">The <see cref="T:Net.Work.Packet"/> to send.</param>
+        </member>
+        <member name="T:Net.Work.NetworkContext">
+            <summary>
+            A class holding contextual information for use in <see cref="M:Net.Work.Packet.Handle(Net.Work.NetworkContext,Net.Work.NetworkDirection)"/>.
+            </summary>
+        </member>
+        <member name="M:Net.Work.NetworkContext.GetSender">
+            <summary>
+            Gets the <see cref="T:Net.Work.ServerClient"/> sender of the packet. This value will be null when not received on the <see cref="T:Net.Work.Server"/>.
+            </summary>
+            <returns>The <see cref="T:Net.Work.ServerClient"/> who sent the <see cref="T:Net.Work.Packet"/>.</returns>
+        </member>
+        <member name="T:Net.Work.NetworkDirection">
+            <summary>
+            Indicates a direction on the network, ie <see cref="F:Net.Work.NetworkDirection.Server"/> to <see cref="F:Net.Work.NetworkDirection.Client"/> or vice-versa.
+            The value indicates the recipient.
+            </summary>
+        </member>
+        <member name="F:Net.Work.NetworkDirection.Server">
+            <summary>
+            Indicates a <see cref="T:Net.Work.Packet"/> was sent to the server.
+            </summary>
+        </member>
+        <member name="F:Net.Work.NetworkDirection.Client">
+            <summary>
+            Indicates a <see cref="T:Net.Work.Packet"/> was sent to the client.
+            </summary>
+        </member>
+        <member name="T:Net.Work.NetworkManager">
+            <summary>
+            Main class for handling network setup with the Net.Work library.
+            For hosting a server see <see cref="M:Net.Work.NetworkManager.HostServer(System.Int32)"/>.
+            For connecting to a server see <see cref="M:Net.Work.NetworkManager.ConnectToServer(System.Net.IPAddress,System.Int32)"/>
+            Make sure to register any packet types that will be used on the network with
+            <see cref="M:Net.Work.NetworkManager.RegisterPacketHandler``1(System.Func{Net.Work.ByteBuffer,``0})"/>.
+            </summary>
+        </member>
+        <member name="M:Net.Work.NetworkManager.HostServer(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Hosts a server on the given IP Address and port.
+            </summary>
+            <param name="iPAddress">The IP Address to listen for.</param>
+            <param name="port">The port to listen on.</param>
+            <returns>A <see cref="T:Net.Work.Server"/> object.</returns>
+        </member>
+        <member name="M:Net.Work.NetworkManager.HostServer(System.Int32)">
+            <summary>
+            Hosts a server on the given port.
+            </summary>
+            <param name="port">The port to listen on.</param>
+            <returns>A <see cref="T:Net.Work.Server"/> object.</returns>
+        </member>
+        <member name="M:Net.Work.NetworkManager.ConnectToServer(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Connects to a server on the given IP address and port.
+            </summary>
+            <param name="iPAddress">The IP address to connect to.</param>
+            <param name="port">The port to use.</param>
+            <returns>A <see cref="T:Net.Work.Client"/> object.</returns>
+        </member>
+        <member name="M:Net.Work.NetworkManager.RegisterPacketHandler``1(System.Func{Net.Work.ByteBuffer,``0})">
+            <summary>
+            Register a factory method to create instances of a packet from the network.
+            </summary>
+            <typeparam name="MSG">A <see cref="T:System.Type"/> extending <see cref="T:Net.Work.Packet"/>.</typeparam>
+            <param name="factory">A Function consuming a <see cref="T:Net.Work.ByteBuffer"/> returning an instance of typeparam MSG.</param>
+        </member>
+        <member name="M:Net.Work.NetworkManager.DecodePacket(System.Byte,Net.Work.ByteBuffer)">
+            <summary>
+            Returns a <see cref="T:Net.Work.Packet"/> instance decoded by the packet decoder registered under the given index.
+            see <see cref="M:Net.Work.NetworkManager.RegisterPacketHandler``1(System.Func{Net.Work.ByteBuffer,``0})"/>
+            </summary>
+            <param name="index">The byte index the packet factory is registered under.</param>
+            <param name="buffer">the buffer to be decoded.</param>
+            <returns>A <see cref="T:Net.Work.Packet"/> object that has been decoded.</returns>
+        </member>
+        <member name="M:Net.Work.NetworkManager.GetPacketIndex(System.Type)">
+            <summary>
+            Get a packet index by the given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">a <see cref="T:System.Type"/> extending <see cref="T:Net.Work.Packet"/>.</param>
+            <returns>A <see cref="T:System.Byte"/> index for the given <see cref="T:Net.Work.Packet"/> type.</returns>
+        </member>
+        <member name="T:Net.Work.Packet">
+            <summary>
+            A base level implementation of a network <see cref="T:Net.Work.Packet"/>. Extend this <see cref="T:System.Type"/> to create your own packets.
+            All <see cref="T:Net.Work.Packet"/> must contain a method for <see cref="M:Net.Work.Packet.Encode(Net.Work.ByteBuffer)"/> and <see cref="M:Net.Work.Packet.Handle(Net.Work.NetworkContext,Net.Work.NetworkDirection)"/>.
+            It is recommended to create your own constructor with necessary parameters, as well as a constructor taking a <see cref="T:Net.Work.ByteBuffer"/> for decoding.
+            </summary>
+        </member>
+        <member name="M:Net.Work.Packet.Encode(Net.Work.ByteBuffer)">
+            <summary>
+            Converts all packet related data into <see cref="T:System.Byte"/> and adds them to the <see cref="T:Net.Work.ByteBuffer"/> for sending across the network.
+            It is important to <see cref="M:Net.Work.Packet.Encode(Net.Work.ByteBuffer)"/> the data in the same order it is expected to be decoded.
+            </summary>
+            <param name="buffer">The <see cref="T:Net.Work.ByteBuffer"/> to encode on.</param>
+        </member>
+        <member name="M:Net.Work.Packet.Handle(Net.Work.NetworkContext,Net.Work.NetworkDirection)">
+            <summary>
+            This method will be called when the packet is received on either the <see cref="T:Net.Work.Client"/> or <see cref="T:Net.Work.Server"/>.
+            Use the method to specify what needs to happen when the packet is recieved on either side.
+            </summary>
+            <param name="context">Contains contextual information about the packet, ie. the <see cref="T:Net.Work.ServerClient"/> sender when on the server.</param>
+            <param name="direction">The <see cref="T:Net.Work.NetworkDirection"/> the packet was sent towards.</param>
+        </member>
+        <member name="T:Net.Work.Server">
+            <summary>
+            A class managing lower level implementations of TCP protocol. Use this object to send <see cref="T:Net.Work.Packet"/> to connected clients.
+            <see cref="M:Net.Work.Server.SendPacket(Net.Work.Packet,Net.Work.ServerClient)"/>.
+            <see cref="M:Net.Work.Server.SendToAll(Net.Work.Packet)"/>.
+            Automatically starts and manages listenening threads.
+            See <see cref="M:Net.Work.NetworkManager.HostServer(System.Int32)"/> for creating an instance of <see cref="T:Net.Work.Server"/>.
+            </summary>
+        </member>
+        <member name="M:Net.Work.Server.SendPacket(Net.Work.Packet,Net.Work.ServerClient)">
+            <summary>
+            Sends a <see cref="T:Net.Work.Packet"/> over the network to the connected <see cref="T:Net.Work.ServerClient"/>.
+            </summary>
+            <param name="packet">the <see cref="T:Net.Work.Packet"/> to send.</param>
+            <param name="client">the <see cref="T:Net.Work.ServerClient"/> to send to.</param>
+        </member>
+        <member name="M:Net.Work.Server.SendToAll(Net.Work.Packet)">
+            <summary>
+            Sends a <see cref="T:Net.Work.Packet"/> over the network to all connected <see cref="T:Net.Work.ServerClient"/>.
+            </summary>
+            <param name="packet">The <see cref="T:Net.Work.Packet"/> to send.</param>
+        </member>
+        <member name="M:Net.Work.Server.SendToAllBut(Net.Work.Packet,Net.Work.ServerClient)">
+            <summary>
+            Sends a <see cref="T:Net.Work.Packet"/> over the network to all connected <see cref="T:Net.Work.ServerClient"/>.
+            Excludes sending the packet to a specific <see cref="T:Net.Work.ServerClient"/>.
+            </summary>
+            <param name="packet">The <see cref="T:Net.Work.Packet"/> to send.</param>
+            <param name="excluded">The <see cref="T:Net.Work.ServerClient"/> to exclude.</param>
+        </member>
+        <member name="T:Net.Work.ServerClient">
+            <summary>
+            A class representing a lower level conntion to a <see cref="T:System.Net.Sockets.TcpClient"/>.
+            Can be used as an identifier for connected clients. See <see cref="M:Net.Work.Server.SendPacket(Net.Work.Packet,Net.Work.ServerClient)"/>
+            </summary>
+        </member>
+        <member name="M:Net.Work.ServerClient.isConnected">
+            <summary>
+            Checks to see whether the client is actually connected to a remote host.
+            </summary>
+            <returns>True when connected. False when not.</returns>
+        </member>
+    </members>
+</doc>

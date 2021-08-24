@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SimpleTCP": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Project"
+    }
+  }
+}
